@@ -576,6 +576,426 @@ a {
 
 
 /* ===========================
+   Buy Now — Product Section
+=========================== */
+
+.product-section {
+    background-color: #ffffff;
+    display: flex;
+    align-items: flex-start;
+    gap: 64px;
+    padding: 64px 80px;
+    min-height: 100vh;
+}
+
+/* --- Gallery --- */
+
+.gallery {
+    flex: 1.1;
+    position: sticky;
+    top: 80px;
+}
+
+/* Hide the radio inputs visually */
+.gallery input[type="radio"] {
+    display: none;
+}
+
+/* Only show the active main image */
+.gallery-img {
+    display: none;
+    width: 100%;
+    border-radius: 20px;
+    background-color: #f5f5f7;
+}
+
+#p1:checked ~ .gallery-main .gallery-img-1 { display: block; }
+#p2:checked ~ .gallery-main .gallery-img-2 { display: block; }
+
+.gallery-thumbs {
+    display: flex;
+    gap: 12px;
+    margin-top: 16px;
+}
+
+.thumb {
+    flex: 1;
+    cursor: pointer;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 2px solid transparent;
+    transition: border-color 0.2s;
+}
+
+.thumb img {
+    width: 100%;
+    display: block;
+    border-radius: 10px;
+}
+
+/* Highlight the active thumbnail */
+#p1:checked ~ .gallery-thumbs .thumb-1,
+#p2:checked ~ .gallery-thumbs .thumb-2 {
+    border-color: #1d1d1f;
+}
+
+/* --- Product Panel --- */
+
+.product-panel {
+    flex: 1;
+    padding-top: 8px;
+}
+
+.product-name {
+    font-size: 52px;
+    font-weight: 800;
+    letter-spacing: -2px;
+    color: #1d1d1f;
+    line-height: 1;
+    margin-bottom: 6px;
+}
+
+.product-tagline {
+    font-size: 18px;
+    font-weight: 300;
+    color: #888888;
+    margin-bottom: 28px;
+}
+
+.product-price-row {
+    display: flex;
+    align-items: baseline;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.product-price {
+    font-size: 36px;
+    font-weight: 700;
+    color: #1d1d1f;
+}
+
+.product-price-note {
+    font-size: 14px;
+    font-weight: 400;
+    color: #888888;
+}
+
+.product-desc {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.75;
+    color: #555555;
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid #e5e5e5;
+}
+
+/* --- Options --- */
+
+.option-group {
+    margin-bottom: 28px;
+}
+
+.option-label {
+    font-size: 14px;
+    font-weight: 600;
+    color: #1d1d1f;
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.option-value {
+    font-weight: 400;
+    text-transform: none;
+    letter-spacing: 0;
+    color: #555555;
+}
+
+.color-options {
+    display: flex;
+    gap: 10px;
+}
+
+.color-swatch {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    cursor: pointer;
+    border: 2px solid transparent;
+}
+
+.swatch-black {
+    background-color: #1a1a1a;
+}
+
+.color-swatch.selected {
+    border-color: #1d1d1f;
+    outline: 2px solid #ffffff;
+    outline-offset: -4px;
+}
+
+.qty-row {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    border: 1px solid #e5e5e5;
+    border-radius: 100px;
+    width: fit-content;
+    overflow: hidden;
+}
+
+.qty-btn {
+    padding: 10px 20px;
+    font-size: 18px;
+    font-weight: 300;
+    color: #1d1d1f;
+    cursor: pointer;
+    user-select: none;
+}
+
+.qty-btn:hover {
+    background-color: #f5f5f7;
+}
+
+.qty-num {
+    padding: 10px 24px;
+    font-size: 16px;
+    font-weight: 500;
+    color: #1d1d1f;
+    border-left: 1px solid #e5e5e5;
+    border-right: 1px solid #e5e5e5;
+    min-width: 60px;
+    text-align: center;
+}
+
+/* --- CTA Buttons --- */
+
+.buy-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    margin-top: 28px;
+    margin-bottom: 28px;
+}
+
+.btn-buy-primary {
+    display: block;
+    background-color: #1d1d1f;
+    color: #ffffff;
+    text-align: center;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-buy-primary:hover {
+    background-color: #333333;
+    transform: scale(1.01);
+}
+
+.btn-buy-secondary {
+    display: block;
+    background-color: #c8a04b;
+    color: #ffffff;
+    text-align: center;
+    padding: 16px 32px;
+    font-size: 16px;
+    font-weight: 600;
+    border-radius: 100px;
+    transition: background-color 0.2s, transform 0.2s;
+}
+
+.btn-buy-secondary:hover {
+    background-color: #b08a38;
+    transform: scale(1.01);
+}
+
+/* --- Trust Badges --- */
+
+.trust-badges {
+    display: flex;
+    gap: 24px;
+    padding: 20px 0;
+    border-top: 1px solid #e5e5e5;
+    border-bottom: 1px solid #e5e5e5;
+    margin-bottom: 28px;
+}
+
+.badge {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    font-weight: 500;
+    color: #555555;
+}
+
+.badge-icon {
+    font-size: 10px;
+    color: #c8a04b;
+}
+
+/* --- Specs Table --- */
+
+.product-specs {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+}
+
+.spec-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 14px;
+}
+
+.spec-label {
+    font-weight: 500;
+    color: #1d1d1f;
+}
+
+.spec-val {
+    font-weight: 300;
+    color: #555555;
+}
+
+/* ===========================
+   Buy Now — Feature Highlights
+=========================== */
+
+.buy-features-section {
+    background-color: #f5f5f7;
+    padding: 100px 80px;
+    text-align: center;
+}
+
+.buy-features-grid {
+    display: flex;
+    gap: 24px;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 56px;
+}
+
+.buy-feature {
+    background-color: #ffffff;
+    border-radius: 24px;
+    padding: 40px 28px;
+    flex: 1;
+    min-width: 200px;
+    max-width: 250px;
+    text-align: left;
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+
+.buy-feature:hover {
+    transform: translateY(-8px);
+    box-shadow: 0 24px 48px rgba(0, 0, 0, 0.08);
+}
+
+.buy-feature-icon {
+    font-size: 36px;
+    margin-bottom: 20px;
+    display: block;
+}
+
+.buy-feature h3 {
+    font-size: 17px;
+    font-weight: 600;
+    margin-bottom: 10px;
+    color: #1d1d1f;
+}
+
+.buy-feature p {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.65;
+    color: #555555;
+}
+
+/* ===========================
+   Buy Now — In the Box
+=========================== */
+
+.inbox-section {
+    background-color: #1d1d1f;
+    display: flex;
+    align-items: center;
+    gap: 80px;
+    padding: 100px 80px;
+}
+
+.inbox-inner {
+    flex: 1;
+    color: #ffffff;
+}
+
+.inbox-inner h2 {
+    font-size: 52px;
+    font-weight: 700;
+    letter-spacing: -1.5px;
+    line-height: 1.1;
+    color: #ffffff;
+    margin-bottom: 44px;
+}
+
+.inbox-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+.inbox-list li {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+.inbox-check {
+    font-size: 18px;
+    color: #c8a04b;
+    flex-shrink: 0;
+    margin-top: 2px;
+    font-weight: 700;
+}
+
+.inbox-list strong {
+    display: block;
+    font-size: 16px;
+    font-weight: 600;
+    color: #ffffff;
+    margin-bottom: 4px;
+}
+
+.inbox-list p {
+    font-size: 14px;
+    font-weight: 300;
+    color: #aaaaaa;
+    line-height: 1.6;
+}
+
+.inbox-image-wrap {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+}
+
+.inbox-img {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 20px;
+}
+
+
+/* ===========================
    About Us — Page Hero
 =========================== */
 
