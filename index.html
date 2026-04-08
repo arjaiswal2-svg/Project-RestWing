@@ -178,7 +178,13 @@
         <p class="eyebrow gold center reveal">Available 2026</p>
         <h2 class="cta-title reveal">Sleep better.<br>Starting now.</h2>
         <p class="cta-sub reveal">Join the waitlist and be the first to know when RestWing ships.</p>
-        <a href="buynow.html" class="btn-white reveal">Get Early Access</a>
+        <form id="waitlist-form" class="waitlist-form reveal">
+            <input type="email" id="waitlist-email" placeholder="Enter your email" required>
+            <button type="submit" class="btn-white">Get Early Access</button>
+        </form>
+        <p id="waitlist-msg" class="waitlist-msg" style="display:none;">
+            &#10003; You're on the list. We'll be in touch.
+        </p>
     </section>
 
     <!-- Footer -->
@@ -198,6 +204,7 @@
     </footer>
 
 
+    <script type="module" src="waitlist.js"></script>
 </body>
 
 </html>
