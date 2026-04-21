@@ -60,7 +60,11 @@
             <div class="product-price-row">
                 <span class="product-price">$39</span>
                 <span class="product-price-note">Free shipping on all orders</span>
+                <span id="stock-badge" class="stock-badge" style="display:none;"></span>
             </div>
+            <p id="out-of-stock-msg" class="out-of-stock-msg" style="display:none;">
+                This product is currently out of stock. Join the <a href="index.html#waitlist">waitlist</a> to be notified when it's back.
+            </p>
 
             <p class="product-desc">
                 The clip-on headrest attachment that provides adjustable lateral head
@@ -88,8 +92,8 @@
 
             <!-- CTA Buttons -->
             <div class="buy-buttons">
-                <a href="checkout.html" class="btn-buy-primary">Add to Bag</a>
-                <a href="checkout.html" class="btn-buy-secondary">Buy Now</a>
+                <a href="checkout.html" class="btn-buy-primary" id="add-to-bag-btn">Add to Bag</a>
+                <a href="checkout.html" class="btn-buy-secondary" id="buy-now-btn">Buy Now</a>
             </div>
 
             <!-- Trust Badges -->
@@ -221,6 +225,7 @@
         </div>
     </footer>
 
+    <script type="module" src="inventory.js"></script>
 </body>
 
 </html>

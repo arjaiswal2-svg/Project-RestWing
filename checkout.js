@@ -8,6 +8,8 @@ import { db } from "./firebase.js";
 import {
   collection,
   addDoc,
+  doc,
+  runTransaction,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -87,38 +89,55 @@ document
     submitBtn.disabled = true;
 
     try {
-      // Save order to Firestore
+      const inventoryRef = doc(db, "inventory", "restwing");
+      let orderId = null;
+
+      // Transaction: check stock and decrement atomically
+      // This prevents two customers from buying the last unit at the same time
+      await runTransaction(db, async (transaction) => {
+        const inventorySnap = await transaction.get(inventoryRef);
+
+        if (!inventorySnap.exists()) {
+          throw new Error("Inventory record not found.");
+        }
+
+        const currentStock = inventorySnap.data().stock;
+
+        if (currentStock < quantity) {
+          throw new Error("out_of_stock");
+        }
+
+        // Decrement stock
+        transaction.update(inventoryRef, { stock: currentStock - quantity });
+      });
+
+      // Stock confirmed — save the order
       const orderRef = await addDoc(collection(db, "orders"), {
-        customer: {
-          firstName,
-          lastName,
-          email,
-          phone,
-        },
-        shipping: {
-          address,
-          address2,
-          city,
-          state,
-          zip,
-        },
+        customer: { firstName, lastName, email, phone },
+        shipping:  { address, address2, city, state, zip },
         quantity,
         unitPrice: UNIT_PRICE,
-        total: quantity * UNIT_PRICE,
-        status: "pending_payment",
+        total:     quantity * UNIT_PRICE,
+        status:    "pending_payment",
         createdAt: serverTimestamp(),
       });
 
-      // Build Stripe URL — pass email and order ID so Stripe can prefill fields
-      const stripeUrl = `${STRIPE_PAYMENT_LINK}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${orderRef.id}&quantity=${quantity}`;
+      orderId = orderRef.id;
 
-      // Redirect to Stripe Checkout
+      // Redirect to Stripe with prefilled email and order reference
+      const stripeUrl = `${STRIPE_PAYMENT_LINK}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${orderId}&quantity=${quantity}`;
       window.location.href = stripeUrl;
+
     } catch (err) {
-      console.error("Error saving order:", err);
       submitBtn.textContent = "Continue to Payment →";
       submitBtn.disabled = false;
-      errorEl.textContent = "Something went wrong. Please try again.";
+
+      if (err.message === "out_of_stock") {
+        errorEl.textContent = "Sorry, we are currently out of stock. Please check back soon.";
+      } else {
+        errorEl.textContent = "Something went wrong. Please try again.";
+        console.error("Checkout error:", err);
+      }
       errorEl.style.display = "block";
     }
   });

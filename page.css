@@ -615,6 +615,50 @@ a {
    Buy Now — Product Section
 =========================== */
 
+/* --- Stock Badge & Out of Stock --- */
+
+.stock-badge {
+    font-size: 12px;
+    font-weight: 600;
+    padding: 4px 12px;
+    border-radius: 100px;
+    letter-spacing: 0.5px;
+}
+
+.badge-in-stock {
+    background-color: #e8f5e9;
+    color: #2e7d32;
+}
+
+.badge-low-stock {
+    background-color: #fff3e0;
+    color: #e65100;
+}
+
+.out-of-stock-msg {
+    background-color: #fef2f2;
+    border: 1px solid #fecaca;
+    color: #b91c1c;
+    font-size: 14px;
+    font-weight: 400;
+    padding: 14px 18px;
+    border-radius: 12px;
+    margin-bottom: 20px;
+    line-height: 1.6;
+}
+
+.out-of-stock-msg a {
+    color: #b91c1c;
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.btn-disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
 .product-section {
     background-color: #ffffff;
     display: flex;

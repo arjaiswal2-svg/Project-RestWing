@@ -10,6 +10,8 @@ import { db } from "./firebase.js";
 import {
     collection,
     addDoc,
+    doc,
+    setDoc,
     serverTimestamp
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -67,6 +69,16 @@ async function setupDatabase() {
         createdAt:  serverTimestamp()
     });
     console.log("waitlist collection created");
+
+    // ── Collection 4: inventory ──────────────────
+    // Tracks stock levels per product.
+    // Uses setDoc with a fixed ID so there's always one inventory record per product.
+    await setDoc(doc(db, "inventory", "restwing"), {
+        productName: "RestWing",
+        stock:       100,
+        updatedAt:   serverTimestamp()
+    });
+    console.log("inventory collection created with 100 units");
 
     console.log("Database setup complete. Check your Firestore console.");
 }
