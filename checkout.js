@@ -114,11 +114,11 @@ document
       // Stock confirmed — save the order
       const orderRef = await addDoc(collection(db, "orders"), {
         customer: { firstName, lastName, email, phone },
-        shipping:  { address, address2, city, state, zip },
+        shipping: { address, address2, city, state, zip },
         quantity,
         unitPrice: UNIT_PRICE,
-        total:     quantity * UNIT_PRICE,
-        status:    "pending_payment",
+        total: quantity * UNIT_PRICE,
+        status: "pending_payment",
         createdAt: serverTimestamp(),
       });
 
@@ -127,13 +127,13 @@ document
       // Redirect to Stripe with prefilled email and order reference
       const stripeUrl = `${STRIPE_PAYMENT_LINK}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${orderId}&quantity=${quantity}`;
       window.location.href = stripeUrl;
-
     } catch (err) {
       submitBtn.textContent = "Continue to Payment →";
       submitBtn.disabled = false;
 
       if (err.message === "out_of_stock") {
-        errorEl.textContent = "Sorry, we are currently out of stock. Please check back soon.";
+        errorEl.textContent =
+          "Sorry, we are currently out of stock. Please check back soon.";
       } else {
         errorEl.textContent = "Something went wrong. Please try again.";
         console.error("Checkout error:", err);

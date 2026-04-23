@@ -4,13 +4,13 @@
 const puppeteer = require("puppeteer");
 
 async function go() {
-  // launch the browser
+  // LAUNCH THE BROWSER
   const browser = await puppeteer.launch({
     headless: false,
   });
-  //   open a new tab
+  //   OPEN A NEW TAB
   const page = await browser.newPage();
 }
 
-// call the function
+// CALL THE FUNCTION
 go();
