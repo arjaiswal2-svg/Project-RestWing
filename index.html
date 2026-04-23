@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>RestWing — Rest Easy. Rest Anywhere.</title>
     <link rel="stylesheet" href="page.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap"
+        rel="stylesheet">
 </head>
+
 <body>
 
     <!-- Sticky Navigation Bar -->
@@ -69,14 +72,16 @@
                     <span class="problem-icon">&#x1FA91;</span>
                     <div>
                         <h4>Car Headrests Are Safety Devices</h4>
-                        <p>Factory headrests are designed for crash impact — static, non-adjustable, not built for resting comfort.</p>
+                        <p>Factory headrests are designed for crash impact — static, non-adjustable, not built for
+                            resting comfort.</p>
                     </div>
                 </div>
                 <div class="problem-item reveal">
                     <span class="problem-icon">&#x1F614;</span>
                     <div>
                         <h4>Travel Pillows Don't Cut It</h4>
-                        <p>U-shaped pillows add padding but zero structural lateral support. Your head still falls and slips.</p>
+                        <p>U-shaped pillows add padding but zero structural lateral support. Your head still falls and
+                            slips.</p>
                     </div>
                 </div>
                 <div class="problem-item reveal">
@@ -102,12 +107,14 @@
             <div class="feature-card reveal">
                 <span class="feature-icon">&#8635;</span>
                 <h3>Adjustable Wing Arms</h3>
-                <p>Wings rotate 0&ndash;90&deg; and adapt to different head positions and body sizes for a personalized fit every time.</p>
+                <p>Wings rotate 0&ndash;90&deg; and adapt to different head positions and body sizes for a personalized
+                    fit every time.</p>
             </div>
             <div class="feature-card reveal">
                 <span class="feature-icon">&#9889;</span>
                 <h3>Tool-Free Clip-On</h3>
-                <p>Rubber-lined clamps attach to any headrest post in under 30 seconds. No tools. No damage. No hassle.</p>
+                <p>Rubber-lined clamps attach to any headrest post in under 30 seconds. No tools. No damage. No hassle.
+                </p>
             </div>
             <div class="feature-card reveal">
                 <span class="feature-icon">&#128663;</span>
@@ -127,7 +134,8 @@
         <p class="eyebrow center reveal">Real People. Real Rides.</p>
         <h2 class="section-title center reveal">See It In Action.</h2>
         <div class="inaction-img-wrap reveal">
-            <img src="restwing-in-use-four-in-one.png" alt="RestWing in use across different scenarios" class="inaction-img">
+            <img src="restwing-in-use-four-in-one.png" alt="RestWing in use across different scenarios"
+                class="inaction-img">
         </div>
     </section>
 
@@ -170,7 +178,13 @@
         <p class="eyebrow gold center reveal">Available 2026</p>
         <h2 class="cta-title reveal">Sleep better.<br>Starting now.</h2>
         <p class="cta-sub reveal">Join the waitlist and be the first to know when RestWing ships.</p>
-        <a href="buynow.html" class="btn-white reveal">Get Early Access</a>
+        <form id="waitlist-form" class="waitlist-form reveal">
+            <input type="email" id="waitlist-email" placeholder="Enter your email" required>
+            <button type="submit" class="btn-white">Get Early Access</button>
+        </form>
+        <p id="waitlist-msg" class="waitlist-msg" style="display:none;">
+            &#10003; You're on the list. We'll be in touch.
+        </p>
     </section>
 
     <!-- Footer -->
@@ -190,5 +204,19 @@
     </footer>
 
 
+    <script type="module" src="waitlist.js">
+       // Firebase configuration
+       const firebaseConfig = {
+  apiKey: "AIzaSyAC77t4YuL3LBfSAGI6j8mABrcCMJgR97A",
+  authDomain: "restwing-3c0a7.firebaseapp.com",
+  projectId: "restwing-3c0a7",
+  storageBucket: "restwing-3c0a7.firebasestorage.app",
+  messagingSenderId: "59832562767",
+  appId: "1:59832562767:web:ee8e249b648a1cd3f7263a"
+};
+// Firebase initialization
+ firebase.initializeApp(firebaseConfig);
+    </script>
 </body>
+
 </html>
