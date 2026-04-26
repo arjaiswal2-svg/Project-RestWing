@@ -1793,3 +1793,341 @@ a {
 .success-detail-row a {
     color: #c8a04b;
 }
+
+
+/* ===========================
+   Mobile Responsive
+=========================== */
+
+@media (max-width: 768px) {
+
+    /* --- Navbar --- */
+    .navbar {
+        padding: 12px 16px;
+    }
+
+    .nav-brand {
+        font-size: 16px;
+        letter-spacing: 2px;
+    }
+
+    .nav-links a {
+        margin-left: 12px;
+        font-size: 12px;
+        white-space: nowrap;
+    }
+
+    .nav-links .nav-cta {
+        padding: 6px 12px;
+        white-space: nowrap;
+    }
+
+    /* --- Hero --- */
+    .hero {
+        flex-direction: column;
+        padding: 60px 24px;
+        min-height: auto;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .hero-text {
+        max-width: 100%;
+    }
+
+    .hero-title {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .hero-buttons {
+        justify-content: center;
+    }
+
+    .hero-image-wrap {
+        width: 100%;
+    }
+
+    .hero-img {
+        max-width: 100%;
+    }
+
+    /* --- Stats --- */
+    .stats-section {
+        padding: 60px 24px;
+    }
+
+    .stats-row {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .stat-divider {
+        width: 100%;
+        height: 1px;
+        align-self: auto;
+    }
+
+    .stat-num {
+        font-size: 48px;
+    }
+
+    /* --- Section Titles --- */
+    .section-title {
+        font-size: 36px;
+        letter-spacing: -1px;
+    }
+
+    /* --- Problem Section --- */
+    .problem-section {
+        padding: 60px 24px;
+    }
+
+    .problem-inner h2 {
+        font-size: 36px;
+    }
+
+    /* --- Features Section --- */
+    .features-section {
+        padding: 60px 24px;
+    }
+
+    .features-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .feature-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* --- In Action --- */
+    .inaction-section .section-title,
+    .inaction-section .eyebrow {
+        padding: 0 24px;
+    }
+
+    /* --- Showcase --- */
+    .showcase-section {
+        flex-direction: column;
+        padding: 60px 24px;
+        gap: 40px;
+        text-align: center;
+    }
+
+    .showcase-text h2 {
+        font-size: 36px;
+    }
+
+    .showcase-img {
+        max-width: 100%;
+    }
+
+    /* --- Market --- */
+    .market-section {
+        padding: 60px 24px;
+    }
+
+    /* --- CTA --- */
+    .cta-section {
+        padding: 80px 24px;
+    }
+
+    .cta-title {
+        font-size: 44px;
+        letter-spacing: -1.5px;
+    }
+
+    .waitlist-form {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .waitlist-form input[type="email"] {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    /* --- Footer --- */
+    .footer {
+        padding: 32px 24px;
+    }
+
+    .footer-top {
+        flex-direction: column;
+        gap: 16px;
+        text-align: center;
+    }
+
+    .footer-nav a {
+        margin-left: 16px;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 8px;
+        text-align: center;
+    }
+
+    /* --- Buy Now Product Section --- */
+    .product-section {
+        flex-direction: column;
+        padding: 40px 24px;
+        min-height: auto;
+        gap: 32px;
+    }
+
+    .gallery {
+        position: static;
+        width: 100%;
+    }
+
+    .product-name {
+        font-size: 36px;
+    }
+
+    .trust-badges {
+        flex-wrap: wrap;
+        gap: 16px;
+    }
+
+    /* --- Buy Features --- */
+    .buy-features-section {
+        padding: 60px 24px;
+    }
+
+    .buy-features-grid {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .buy-feature {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    /* --- In the Box --- */
+    .inbox-section {
+        flex-direction: column;
+        padding: 60px 24px;
+        gap: 40px;
+    }
+
+    .inbox-inner h2 {
+        font-size: 36px;
+    }
+
+    .inbox-img {
+        max-width: 100%;
+    }
+
+    /* --- About Us --- */
+    .about-hero {
+        padding: 80px 24px 60px 24px;
+    }
+
+    .about-hero-title {
+        font-size: 48px;
+        letter-spacing: -2px;
+    }
+
+    .story-section {
+        padding: 60px 24px;
+    }
+
+    .story-inner {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .story-text h2 {
+        font-size: 32px;
+    }
+
+    .pullquote-section {
+        padding: 60px 24px;
+    }
+
+    .pullquote-text {
+        font-size: 22px;
+    }
+
+    .built-section {
+        padding: 60px 24px;
+    }
+
+    .built-inner {
+        flex-direction: column;
+        gap: 40px;
+    }
+
+    .built-text h2 {
+        font-size: 32px;
+    }
+
+    .built-num {
+        font-size: 36px;
+    }
+
+    .team-section {
+        padding: 60px 24px;
+    }
+
+    .team-card {
+        max-width: 100%;
+        width: 100%;
+    }
+
+    .vision-section {
+        padding: 80px 24px;
+    }
+
+    .vision-title {
+        font-size: 44px;
+        letter-spacing: -1.5px;
+    }
+
+    .advice-section {
+        padding: 60px 24px;
+    }
+
+    .advice-inner h2 {
+        font-size: 36px;
+    }
+
+    /* --- Checkout --- */
+    .checkout-section {
+        flex-direction: column;
+        padding: 32px 16px;
+        gap: 24px;
+    }
+
+    .checkout-summary {
+        flex: none;
+        width: 100%;
+        position: static;
+    }
+
+    .form-section {
+        padding: 24px 20px;
+    }
+
+    .form-row {
+        flex-direction: column;
+        gap: 0;
+    }
+
+    .form-group-small {
+        flex: 1;
+    }
+
+    /* --- Success Page --- */
+    .success-section {
+        padding: 60px 24px;
+    }
+
+    .success-title {
+        font-size: 40px;
+    }
+}
