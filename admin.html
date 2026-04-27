@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin — RestWing</title>
+  <link rel="stylesheet" href="page.css">
+</head>
+
+<body>
+//Navigation bar
+<header class="navbar">
+  <div class="nav-brand">RestWing</div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="#" onclick="logout()" class="nav-cta">Logout</a>
+  </nav>
+</header>
+//Dashboard
+<section class="features-section">
+
+  <p class="eyebrow center">Admin Panel</p>
+  <h2 class="section-title center">Manage Products & Orders</h2>
+  // Add, remove, update products
+  <div class="features-grid">
+
+    <div class="feature-card">
+      <h3>Add / Update Product</h3>
+
+      <input id="product-id" placeholder="Product ID" style="width:100%; margin-bottom:10px;">
+      <input id="product-name" placeholder="Product Name" style="width:100%; margin-bottom:10px;">
+      <input id="product-price" type="number" placeholder="Price" style="width:100%; margin-bottom:10px;">
+      <input id="product-stock" type="number" placeholder="Stock" style="width:100%; margin-bottom:10px;">
+
+      <button id="save-product" class="btn-dark">Save Product</button>
+    </div>
+    //Product list
+    <div class="feature-card">
+      <h3>Products</h3>
+      <div id="products-list"></div>
+    </div>
+     //Order list
+    <div class="feature-card">
+      <h3>Orders</h3>
+      <div id="orders-list"></div>
+    </div>
+
+  </div>
+
+</section>
+
+<script type="module" src="admin.js"></script>
+
+</body>
+</html>
