@@ -1,0 +1,118 @@
+import { db, auth } from "./firebase.js";
+
+import {
+  onAuthStateChanged,
+  signOut
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+import {
+  doc,
+  setDoc,
+  getDocs,
+  collection
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// Admin email for access control
+const ADMIN_EMAIL = "admin1234@restwing.com";
+// Check auth state
+onAuthStateChanged(auth, (user) => {
+
+  if (!user) {
+    // not logged in → redirect to login page
+    window.location.href = "admin-login.html";
+    return;
+  }
+
+  if (user.email !== ADMIN_EMAIL) {
+    // block non-admin users
+    alert("Access denied");
+    window.location.href = "index.html";
+    return;
+  }
+  // Logged in as admin → load data
+  loadOrders();
+  loadProducts();
+});
+//Admin logout
+window.logout = function () {
+  signOut(auth);
+  window.location.href = "admin-login.html";
+};
+//Load products
+async function loadProducts() {
+  const container = document.getElementById("products-list");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const snapshot = await getDocs(collection(db, "products"));
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    const div = document.createElement("div");
+    div.style.marginBottom = "10px";
+
+    div.innerHTML = `
+      <strong>${data.name}</strong>
+      — $${data.price}
+      — Stock: ${data.stock}
+    `;
+
+    container.appendChild(div);
+  });
+}
+//Load or check orders
+async function loadOrders() {
+  const container = document.getElementById("orders-list");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  const snapshot = await getDocs(collection(db, "orders"));
+
+  snapshot.forEach((docSnap) => {
+    const data = docSnap.data();
+
+    const div = document.createElement("div");
+    div.style.marginBottom = "10px";
+
+    div.innerHTML = `
+      <strong>${data.customer?.firstName || ""} ${data.customer?.lastName || ""}</strong>
+      — $${data.total}
+      — ${data.status}
+    `;
+
+    container.appendChild(div);
+  });
+}
+// Add or update product
+document.addEventListener("DOMContentLoaded", () => {
+
+  const saveBtn = document.getElementById("save-product");
+
+  if (saveBtn) {
+    saveBtn.addEventListener("click", async () => {
+
+      const id = document.getElementById("product-id").value.trim();
+      const name = document.getElementById("product-name").value.trim();
+      const price = parseFloat(document.getElementById("product-price").value);
+      const stock = parseInt(document.getElementById("product-stock").value);
+
+      if (!id || !name || isNaN(price) || isNaN(stock)) {
+        alert("Please fill all fields correctly");
+        return;
+      }
+
+      await setDoc(doc(db, "products", id), {
+        name,
+        price,
+        stock
+      });
+
+      alert("Product saved");
+
+      loadProducts();
+    });
+  }
+
+});
