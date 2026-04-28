@@ -6,7 +6,7 @@
 const puppeteer = require("puppeteer");
 
 // change this to your Firebase hosting URL once deployed
-const BASE_URL = "http://127.0.0.1:5500";
+const BASE_URL = "https://project-restwing.web.app";
 
 // test email we'll type into the waitlist form
 const TEST_EMAIL = "testuser@restwing.com";
@@ -48,7 +48,7 @@ async function testWaitlistSignup(page) {
 async function go() {
   const browser = await puppeteer.launch({
     headless: false,
-    slowMo: 80, // slow enough to watch each step during the demo
+    slowMo: 120, 
   });
 
   const page = await browser.newPage();
