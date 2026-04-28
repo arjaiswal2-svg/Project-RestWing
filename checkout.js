@@ -23,7 +23,8 @@ const STRIPE_PAYMENT_LINK =
 const UNIT_PRICE = 39;
 
 // ── Quantity controls ────────────────────────
-let quantity = 1;
+const urlQty = parseInt(new URLSearchParams(window.location.search).get("qty")) || 1;
+let quantity = Math.min(Math.max(urlQty, 1), 10);
 
 const qtyDisplay = document.getElementById("qty-display");
 const subtotalEl = document.getElementById("subtotal");

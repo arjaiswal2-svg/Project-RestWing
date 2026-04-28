@@ -98,20 +98,16 @@
         <div class="option-group">
           <p class="option-label">Quantity</p>
           <div class="qty-row">
-            <span class="qty-btn">&#8722;</span>
-            <span class="qty-num">1</span>
-            <span class="qty-btn">&#43;</span>
+            <span class="qty-btn" id="qty-minus">&#8722;</span>
+            <span class="qty-num" id="qty-num">1</span>
+            <span class="qty-btn" id="qty-plus">&#43;</span>
           </div>
         </div>
 
         <!-- CTA Buttons -->
         <div class="buy-buttons">
-          <a href="checkout.html" class="btn-buy-primary" id="add-to-bag-btn"
-            >Add to Bag</a
-          >
-          <a href="checkout.html" class="btn-buy-secondary" id="buy-now-btn"
-            >Buy Now</a
-          >
+          <a href="checkout.html?qty=1" class="btn-buy-primary" id="add-to-bag-btn">Add to Bag</a>
+          <a href="checkout.html?qty=1" class="btn-buy-secondary" id="buy-now-btn">Buy Now</a>
         </div>
 
         <!-- Trust Badges -->
@@ -266,5 +262,25 @@
 
     <script type="module" src="auth-nav.js"></script>
     <script type="module" src="inventory.js"></script>
+    <script>
+      let qty = 1;
+      const qtyNum = document.getElementById("qty-num");
+      const addToBagBtn = document.getElementById("add-to-bag-btn");
+      const buyNowBtn = document.getElementById("buy-now-btn");
+
+      function updateQtyLinks() {
+        qtyNum.textContent = qty;
+        addToBagBtn.href = "checkout.html?qty=" + qty;
+        buyNowBtn.href  = "checkout.html?qty=" + qty;
+      }
+
+      document.getElementById("qty-minus").addEventListener("click", () => {
+        if (qty > 1) { qty--; updateQtyLinks(); }
+      });
+
+      document.getElementById("qty-plus").addEventListener("click", () => {
+        if (qty < 10) { qty++; updateQtyLinks(); }
+      });
+    </script>
   </body>
 </html>
