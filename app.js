@@ -27,8 +27,8 @@ await page.evaluate(async () => {
     let total = 0;
     const target = document.getElementById("waitlist-form").offsetTop;
     const timer = setInterval(() => {
-      window.scrollBy(0, 18);
-      total += 18;
+      window.scrollBy(0, 13);
+      total += 13;
       if (total >= target) {
         clearInterval(timer);
         resolve();
