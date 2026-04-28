@@ -37,6 +37,8 @@ function updateTotals() {
   totalEl.textContent = "$" + total.toFixed(2);
 }
 
+updateTotals();
+
 document.getElementById("qty-minus").addEventListener("click", () => {
   if (quantity > 1) {
     quantity--;
