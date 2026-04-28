@@ -27,13 +27,13 @@ await page.evaluate(async () => {
     let total = 0;
     const target = document.getElementById("waitlist-form").offsetTop;
     const timer = setInterval(() => {
-      window.scrollBy(0, 8);
-      total += 8;
+      window.scrollBy(0, 25);
+      total += 25;
       if (total >= target) {
         clearInterval(timer);
         resolve();
       }
-    }, 20);
+    }, 15);
   });
 });
 await new Promise(resolve => setTimeout(resolve, 800));
