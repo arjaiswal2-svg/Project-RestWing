@@ -67,7 +67,7 @@ console.log("    ✓ Scrolled to waitlist.");
 async function go() {
   const browser = await puppeteer.launch({
     headless: false,
-    slowMo: 120, 
+    slowMo: 80, 
   });
 
   const page = await browser.newPage();
