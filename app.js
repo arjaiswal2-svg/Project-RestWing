@@ -1,16 +1,69 @@
-// This is for all pages
+// app.js — Puppeteer test for RestWing
+// tests the waitlist signup on the homepage
+
 // import puppetteer
 
 const puppeteer = require("puppeteer");
 
-async function go() {
-  // LAUNCH THE BROWSER
-  const browser = await puppeteer.launch({
-    headless: false,
-  });
-  //   OPEN A NEW TAB
-  const page = await browser.newPage();
+// change this to your Firebase hosting URL once deployed
+const BASE_URL = "http://127.0.0.1:5500";
+
+// test email we'll type into the waitlist form
+const TEST_EMAIL = "testuser@restwing.com";
+
+// open the homepage, sign up for the waitlist, check the success message appears
+async function testWaitlistSignup(page) {
+  console.log("=== RestWing: Waitlist Signup Test ===");
+
+  // go to the homepage
+  console.log("\n[1] Opening homepage...");
+  await page.goto(`${BASE_URL}/index.html`, { waitUntil: "networkidle2" });
+  console.log("    ✓ Homepage loaded.");
+
+  // type an email into the waitlist input
+  console.log("\n[2] Entering email...");
+  await page.type("#waitlist-email", TEST_EMAIL);
+  console.log(`    ✓ Typed: ${TEST_EMAIL}`);
+
+  // click the submit button
+  console.log("\n[3] Clicking 'Get Early Access'...");
+  await page.click("#waitlist-form button[type='submit']");
+  console.log("    ✓ Button clicked.");
+
+  // wait for the success message to show up
+  console.log("\n[4] Waiting for success message...");
+  await page.waitForSelector("#waitlist-msg", { visible: true, timeout: 8000 });
+
+  const msgText = await page.$eval("#waitlist-msg", el => el.textContent.trim());
+  console.log(`    Message shown: "${msgText}"`);
+
+  if (!msgText.includes("You're on the list")) {
+    throw new Error(`Unexpected message: ${msgText}`);
+  }
+
+  console.log("\n✅ Test passed — waitlist signup is working.\n");
 }
 
-// CALL THE FUNCTION
+// launch the browser, run the test, close when done
+async function go() {
+  const browser = await puppeteer.launch({
+    headless: false,
+    slowMo: 80, // slow enough to watch each step during the demo
+  });
+
+  const page = await browser.newPage();
+  await page.setViewport({ width: 1280, height: 800 });
+
+  try {
+    await testWaitlistSignup(page);
+  } catch (err) {
+    console.error(`\n❌ Test failed: ${err.message}\n`);
+  } finally {
+    // pause so you can see the result before the browser closes
+    await new Promise(resolve => setTimeout(resolve, 3000));
+    await browser.close();
+  }
+}
+
+// run it
 go();
