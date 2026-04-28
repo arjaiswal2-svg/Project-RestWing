@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Login — RestWing</title>
+  <link rel="stylesheet" href="page.css">
+</head>
+
+<body>
+
+//Navigation bar
+<header class="navbar">
+  <div class="nav-brand">RestWing</div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="login.html">Login</a>
+    <a href="signup.html" class="nav-cta">Sign Up</a>
+  </nav>
+</header>
+
+//Login form
+<section class="features-section">
+
+  <p class="eyebrow center">Welcome Back</p>
+  <h2 class="section-title center">Login</h2>
+
+  <div class="features-grid">
+
+    <div class="feature-card" style="max-width:400px; width:100%;">
+
+      <input id="email" type="email" placeholder="Email"
+        style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
+
+      <input id="password" type="password" placeholder="Password"
+        style="width:100%; margin-bottom:20px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
+
+      <button onclick="login()" class="btn-dark" style="width:100%;">
+        Login
+      </button>
+
+      <p id="error" style="color:#c0392b; margin-top:10px; display:none;">
+        Invalid email or password
+      </p>
+
+    </div>
+
+  </div>
+
+</section>
+
+<script type="module">
+import { auth } from "./firebase.js";
+import { signInWithEmailAndPassword } 
+from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+
+window.login = async function () {
+  const email = document.getElementById("email").value.trim();
+  const password = document.getElementById("password").value.trim();
+  const errorEl = document.getElementById("error");
+
+  try {
+    await signInWithEmailAndPassword(auth, email, password);
+    window.location.href = "index.html";
+  } catch (err) {
+    errorEl.style.display = "block";
+  }
+};
+</script>
+
+</body>
+</html>
