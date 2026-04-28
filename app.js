@@ -19,14 +19,25 @@ async function testWaitlistSignup(page) {
   console.log("\n[1] Opening homepage...");
   await page.goto(`${BASE_URL}/index.html`, { waitUntil: "networkidle2" });
   console.log("    ✓ Homepage loaded.");
-  
- // scroll down to the waitlist section so the audience can see it
-  console.log("\n[2] Scrolling to waitlist form...");
-  await page.evaluate(() => {
-    document.getElementById("waitlist-form").scrollIntoView({ behavior: "smooth" });
+
+ // scroll down slowly so the audience can follow along
+console.log("\n[2] Scrolling to waitlist form...");
+await page.evaluate(async () => {
+  await new Promise(resolve => {
+    let total = 0;
+    const target = document.getElementById("waitlist-form").offsetTop;
+    const timer = setInterval(() => {
+      window.scrollBy(0, 8);
+      total += 8;
+      if (total >= target) {
+        clearInterval(timer);
+        resolve();
+      }
+    }, 20);
   });
-  await new Promise(resolve => setTimeout(resolve, 1500));
-  console.log("    ✓ Scrolled to waitlist.");
+});
+await new Promise(resolve => setTimeout(resolve, 800));
+console.log("    ✓ Scrolled to waitlist.");
 
   // type an email into the waitlist input
   console.log("\n[2] Entering email...");
