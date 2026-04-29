@@ -33,11 +33,18 @@ async function loadOrders(uid) {
   const q = query(collection(db, "orders"), where("userId", "==", uid));
   const snapshot = await getDocs(q);
 
-  if (snapshot.empty) {
-    container.innerHTML = "No orders yet.";
-    return;
-  }
-
+if (snapshot.empty) {
+  container.innerHTML = `
+    <div class="feature-card" style="text-align:center;">
+      <h3>No Orders Yet</h3>
+      <p style="color:#555; margin:10px 0 20px;">
+        Looks like you haven’t made a purchase yet.
+      </p>
+      <a href="buynow.html" class="btn-dark">Shop Now</a>
+    </div>
+  `;
+  return;
+}
   snapshot.forEach(docSnap => {
     const data = docSnap.data();
 
