@@ -7,46 +7,70 @@ import { auth } from "./firebase.js";
 import { onAuthStateChanged, signOut }
   from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 
-onAuthStateChanged(auth, (user) => {
+onAuthStateChanged(auth, async (user) => {
   const navLinks = document.querySelector(".nav-links");
   if (!navLinks) return;
 
   const loginLink  = navLinks.querySelector('a[href="login.html"]');
   const signupLink = navLinks.querySelector('a[href="signup.html"]');
+  const buyNowLink = navLinks.querySelector('a[href="buy-now.html"]');
 
   if (user) {
-    // Hide login/signup, show email + logout
+    // Hide login/signup, + buy now
     if (loginLink)  loginLink.style.display  = "none";
     if (signupLink) signupLink.style.display = "none";
+    if (buyNowLink) buyNowLink.style.display = "none";
 
-    const existing = document.getElementById("nav-user-info");
-    if (!existing) {
-      const userInfo = document.createElement("span");
-      userInfo.id = "nav-user-info";
-      userInfo.style.cssText = "color:#aaaaaa; font-size:13px; margin-left:16px;";
-      userInfo.textContent = user.email;
-      navLinks.appendChild(userInfo);
-
-      const logoutBtn = document.createElement("a");
-      logoutBtn.id = "nav-logout-btn";
-      logoutBtn.href = "#";
-      logoutBtn.textContent = "Logout";
-      logoutBtn.style.cssText = "margin-left:16px; font-size:13px;";
-      logoutBtn.addEventListener("click", async (e) => {
-        e.preventDefault();
-        await signOut(auth);
-        window.location.href = "index.html";
-      });
-      navLinks.appendChild(logoutBtn);
+  // Get role 
+  let role = "user";
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (snap.exists()) {
+      role = data.role || "user";
     }
-  } else {
-    // Show login/signup links
+  } catch (err) {
+    console.error("Error fetching user role:", err);
+  }
+  let dashboard = document.getElementById("nav-dashboard-link");
+  if (!dashboard) {
+    dashboard = document.createElement("a");
+    dashboard.id = "nav-dashboard-link";
+
+    if (role === "admin") {
+      dashboard.href = "admin.html";
+      dashboard.textContent = "Admin Dashboard";
+    } else {
+      dashboard.href = "User_Dashboard.html";
+      dashboard.textContent = "Dashboard";
+    }
+    navLinks.appendChild(dashboard);
+  }
+
+  // Logout button
+  let logoutBtn = document.getElementById("nav-logout-link");
+  if (!logoutBtn) {
+    logoutBtn = document.createElement("a");
+    logoutBtn.id = "nav-logout-link";
+    logoutBtn.href = "#";
+    logoutBtn.textContent = "Logout";
+    logoutBtn.style.cssText = "margin-left: 16px; font-size: 13px;";
+    logoutBtn.addEventListener("click", async (e) => {
+      e.preventDefault();
+      await signOut(auth);
+      window.location.href = "index.html";
+    });
+    navLinks.appendChild(logoutBtn);
+  }
+  }else {
+    // Show login/signup, + buy now
     if (loginLink)  loginLink.style.display  = "";
     if (signupLink) signupLink.style.display = "";
+    if (buyNowLink) buyNowLink.style.display = ""; 
 
-    const userInfo  = document.getElementById("nav-user-info");
-    const logoutBtn = document.getElementById("nav-logout-btn");
-    if (userInfo)  userInfo.remove();
+    // Remove dashboard/logout if they exist
+    const dashboard = document.getElementById("nav-dashboard-link");
+    const logoutBtn = document.getElementById("nav-logout-link");
+    if (dashboard) dashboard.remove();
     if (logoutBtn) logoutBtn.remove();
-  }
+  } 
 });
