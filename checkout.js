@@ -1,3 +1,10 @@
+import { auth } from "./firebase.js";
+import {
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+import {
+  getDoc
+} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // =============================================
 // checkout.js — RestWing Checkout Logic
 // Saves order to Firestore, then sends
@@ -39,6 +46,12 @@ function updateTotals() {
 
 updateTotals();
 
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    autofillUser(user.uid);
+  }
+});
+
 document.getElementById("qty-minus").addEventListener("click", () => {
   if (quantity > 1) {
     quantity--;
@@ -52,6 +65,28 @@ document.getElementById("qty-plus").addEventListener("click", () => {
     updateTotals();
   }
 });
+
+// ── Autofill user data ───────────────────────
+async function autofillUser(uid) {
+  try {
+    const ref = doc(db, "users", uid);
+    const snap = await getDoc(ref);
+
+    if (!snap.exists()) return;
+
+    const data = snap.data();
+
+    document.getElementById("first-name").value = data.firstName || "";
+    document.getElementById("last-name").value = data.lastName || "";
+    document.getElementById("email").value = data.email || "";
+    document.getElementById("phone").value = data.phone || "";
+
+    document.getElementById("address").value = data.address || "";
+
+  } catch (err) {
+    console.error("Autofill error:", err);
+  }
+}
 
 // ── Form Submission ──────────────────────────
 document
@@ -113,7 +148,14 @@ document
         // Decrement stock
         transaction.update(inventoryRef, { stock: currentStock - quantity });
       });
-
+      if (auth.currentUser) {
+         await runTransaction(db, async (transaction) => {
+          const userRef = doc(db, "users", auth.currentUser.uid);
+          transaction.update(userRef, {
+            address
+        });
+       });
+     }
       // Stock confirmed — save the order
       const orderRef = await addDoc(collection(db, "orders"), {
         customer: { firstName, lastName, email, phone },
