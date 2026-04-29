@@ -11,24 +11,20 @@ import {
   getDocs,
   collection
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-// Admin email for access control
-const ADMIN_EMAIL = "admin1234@restwing.com";
-// Check auth state
-onAuthStateChanged(auth, (user) => {
 
+import { doc, getDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+// Check auth state and role
+onAuthStateChanged(auth, async (user) => {
   if (!user) {
-    // not logged in → redirect to login page
-    window.location.href = "admin-login.html";
+    window.location.href = "login.html";
     return;
   }
-
-  if (user.email !== ADMIN_EMAIL) {
-    // block non-admin users
+  const snap = await getDoc(doc(db, "users", user.uid));
+  if (!snap.exists() || snap.data().role !== "admin") {
     alert("Access denied");
     window.location.href = "index.html";
     return;
   }
-  // Logged in as admin → load data
   loadOrders();
   loadProducts();
 });
