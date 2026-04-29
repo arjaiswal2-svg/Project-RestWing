@@ -14,46 +14,85 @@
   <nav class="nav-links">
     <a href="index.html">Home</a>
     <a href="aboutus.html">About Us</a>
-    <a href="User_Dashboard.html">My Profile</a>
-    <a href="#" onclick="logout()" class="nav-cta">Logout</a>
   </nav>
 </header>
 
-<section class="features-section">
+<section class="dashboard">
+  
 
-  <p class="eyebrow center">Your Account</p>
-  <h2 class="section-title center">Dashboard</h2>
-
-  <div class="features-grid">
-
-    <!-- Add an Address -->
-    <div class="feature-card">
-      <h3>Address</h3>
-
-      <textarea id="address" placeholder="Enter your address"
-        style="width:100%; padding:10px; border-radius:10px; border:1px solid #e5e5e5;"></textarea>
-
-      <br><br>
-
-      <button onclick="saveAddress()" class="btn-dark">Save Address</button>
+    <!-- Tabs -->
+    <div class="tabs">
+       <button class="tab active" data-tab="profile">Profile</button>
+       <button class="tab" data-tab="orders">Orders</button>
+       <button class="tab" data-tab="tracking">Tracking</button>
+       <button class="tab" data-tab="settings">Settings</button>
     </div>
 
-    <!-- Order History -->
-    <div class="feature-card">
-      <h3>Your Orders</h3>
-      <div id="orders-list"></div>
-    </div>
-    <!-- Order Tracking -->
-    <div class="feature-card">
-      <h3>Track Shipment</h3>
-      <p>Be right back — tracking coming soon.</p>
+    <!-- CONTENT -->
+    <div class="dashboard-wrapper"></div>
+
+    <div class="tab-panel active" id="profile">
+       <div class="profile-grid">
+
+    <!-- USER INFO -->
+      <div class="profile-card">
+        <h3>My Profile</h3>
+        <p><strong>Name:</strong> <span id="user-name"></span></p>
+        <p><strong>Email:</strong> <span id="user-email"></span></p>
+      </div>
+
+    <!-- ADDRESS -->
+      <div class="profile-card">
+        <h3>Saved Address</h3>
+        <div id="saved-address" class="address-box">
+         No address saved
+      </div>
+      </div>
+      </div>
     </div>
 
+      <!-- ORDERS -->
+      <div class="tab-panel" id="orders">
+          <h3>Your Orders</h3>
+          <div id="orders-list"></div>
+          <div id="no-orders" class="empty" style="display:none;">
+            <p>No orders yet</p>
+            <a href="buynow.html" class="btn-dark">Shop Now</a>
+          </div>
+      </div>
+
+      <!-- SETTINGS (ADDRESS) -->
+      <div class="tab-panel settings-form" id="settings">
+          <h3>Shipping Address</h3>
+
+          <label>Street</label>
+          <input id="street" placeholder="123 Main St">
+          <label>Apartment / Suite (optional)</label>
+          <input id="address2" placeholder="Apt, Suite, etc.">
+          <label>City</label>
+          <input id="city" placeholder="City">
+          <label>State</label>
+          <input id="state" placeholder="State">
+          <label>ZIP</label>
+          <input id="zip" placeholder="12345">
+
+          <button id="save-address" class="btn-dark">Save Address</button>
+      </div>
+      <!-- TRACK -->
+      <div class="tab-panel" id="tracking">
+        <h3>Track Orders</h3>
+        <div id="tracking-list"></div>
+        <div id="no-tracking" class="empty" style="display:none;">
+          <p>You don't have any active shipments to track.</p>
+        </div>
+      </div>
+    </div>
   </div>
-
 </section>
 
 <script type="module" src="dashboard.js"></script>
+<script type="module" src="auth-nav.js"></script>
 
 </body>
+
 </html>
