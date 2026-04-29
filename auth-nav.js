@@ -60,7 +60,7 @@ onAuthStateChanged(auth, async (user) => {
     logoutBtn.addEventListener("click", async (e) => {
       e.preventDefault();
       await signOut(auth);
-      window.location.href = "index.html";
+      window.location.replace("index.html");
     });
     navLinks.appendChild(logoutBtn);
   }
