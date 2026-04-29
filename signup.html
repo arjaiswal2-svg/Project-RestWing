@@ -26,29 +26,41 @@
 
   <div class="features-grid">
 
-    <div class="feature-card" style="max-width:400px; width:100%;">
+<div class="feature-card" style="max-width:400px; width:100%;">
 
-      <input id="signup-email" type="email" placeholder="Email"
-        style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
+  <input id="first-name" placeholder="First Name"
+    style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-      <input id="signup-password" type="password" placeholder="Password"
-        style="width:100%; margin-bottom:20px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
+  <input id="last-name" placeholder="Last Name"
+    style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-      <button onclick="signup()" class="btn-dark" style="width:100%;">
-        Create Account
-      </button>
+  <input id="phone" placeholder="Phone Number"
+    style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-      <p id="signup-success" style="color:#2e7d32; margin-top:10px; display:none; font-weight:500;">
-        &#10003; Account created successfully! Welcome to RestWing.
-      </p>
+  <input id="signup-email" type="email" placeholder="Email"
+    style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-      <p id="signup-error" style="color:#c0392b; margin-top:10px; display:none;">
-        Error creating account. Try a different email or stronger password.
-      </p>
+  <input id="signup-password" type="password" placeholder="Password"
+    style="width:100%; margin-bottom:12px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-    </div>
+  <input id="confirm-password" type="password" placeholder="Confirm Password"
+    style="width:100%; margin-bottom:20px; padding:12px; border-radius:10px; border:1px solid #e5e5e5;">
 
-  </div>
+  <button onclick="signup()" class="btn-dark" style="width:100%;">
+    Create Account
+  </button>
+
+  <p id="signup-success" style="color:#2e7d32; margin-top:10px; display:none; font-weight:500;">
+    Account created successfully! Redirecting...
+  </p>
+
+  <p id="signup-error" style="color:#c0392b; margin-top:10px; display:none;">
+    Please fill all fields correctly.
+  </p>
+
+</div>
+
+</div>
 
 </section>
 
@@ -60,30 +72,58 @@ import { doc, setDoc }
 from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
 window.signup = async function () {
+
+  const firstName = document.getElementById("first-name").value.trim();
+  const lastName = document.getElementById("last-name").value.trim();
+  const phone = document.getElementById("phone").value.trim();
   const email = document.getElementById("signup-email").value.trim();
   const password = document.getElementById("signup-password").value.trim();
+  const confirmPassword = document.getElementById("confirm-password").value.trim();
+
   const errorEl = document.getElementById("signup-error");
   const successEl = document.getElementById("signup-success");
-  const btn = document.querySelector("button");
 
   errorEl.style.display = "none";
+
+  if (!firstName || !lastName || !phone || !email || !password || !confirmPassword) {
+    errorEl.innerText = "All fields are required";
+    errorEl.style.display = "block";
+    return;
+  }
+
+  if (password !== confirmPassword) {
+    errorEl.innerText = "Passwords do not match";
+    errorEl.style.display = "block";
+    return;
+  }
+
+  if (password.length < 6) {
+    errorEl.innerText = "Password must be at least 6 characters";
+    errorEl.style.display = "block";
+    return;
+  }
 
   try {
     const userCred = await createUserWithEmailAndPassword(auth, email, password);
 
     await setDoc(doc(db, "users", userCred.user.uid), {
+      firstName,
+      lastName,
+      phone,
       email,
-      role: "user"
+      role: "user",
+      createdAt: new Date()
     });
 
     successEl.style.display = "block";
-    btn.style.display = "none";
-    document.getElementById("signup-email").style.display = "none";
-    document.getElementById("signup-password").style.display = "none";
+    setTimeout(() => {
+      window.location.href = "index.html";
+    }, 500);
 
   } catch (err) {
-    errorEl.style.display = "block";
     console.error(err);
+    errorEl.innerText = "Error creating account (email may already exist)";
+    errorEl.style.display = "block";
   }
 };
 </script>
