@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>My Profile — RestWing</title>
+  <link rel="stylesheet" href="page.css">
+</head>
+
+<body>
+
+<!-- Navigation Bar -->
+<header class="navbar">
+  <div class="nav-brand">RestWing</div>
+  <nav class="nav-links">
+    <a href="index.html">Home</a>
+    <a href="aboutus.html">About Us</a>
+    <a href="User_Dashboard.html">My Profile</a>
+    <a href="#" onclick="logout()" class="nav-cta">Logout</a>
+  </nav>
+</header>
+
+<section class="features-section">
+
+  <p class="eyebrow center">Your Account</p>
+  <h2 class="section-title center">Dashboard</h2>
+
+  <div class="features-grid">
+
+    <!-- Add an Address -->
+    <div class="feature-card">
+      <h3>Address</h3>
+
+      <textarea id="address" placeholder="Enter your address"
+        style="width:100%; padding:10px; border-radius:10px; border:1px solid #e5e5e5;"></textarea>
+
+      <br><br>
+
+      <button onclick="saveAddress()" class="btn-dark">Save Address</button>
+    </div>
+
+    <!-- Order History -->
+    <div class="feature-card">
+      <h3>Your Orders</h3>
+      <div id="orders-list"></div>
+    </div>
+    <!-- Order Tracking -->
+    <div class="feature-card">
+      <h3>Track Shipment</h3>
+      <p>Be right back — tracking coming soon.</p>
+    </div>
+
+  </div>
+
+</section>
+
+<script type="module" src="dashboard.js"></script>
+
+</body>
+</html>
