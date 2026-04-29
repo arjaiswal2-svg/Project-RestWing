@@ -105,14 +105,11 @@ document.addEventListener("DOMContentLoaded", () => {
       loadProducts();
     });
   }
-  document.addEventListener("DOMContentLoaded", () => {
-    const saveBtn = document.getElementById("logout-btn");
-    if (btn) {
-      btn.addEventListener("click", async () => {
-        e.preventDefault();
-        await signOut(auth);
-        window.location.href = "index.html";
-      });
-    }
-});
+  document.addEventListener("click", async (e) => {
+    if (e.target.id === "logout-btn") {
+      e.preventDefault();
+      await signOut(auth);
+      window.location.replace("index.html");
+      }
+    });
 });
