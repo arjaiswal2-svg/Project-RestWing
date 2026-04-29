@@ -44,7 +44,7 @@ onAuthStateChanged(auth, async (user) => {
       dashboard.textContent = "Admin Dashboard";
     } else {
       dashboard.href = "User_Dashboard.html";
-      dashboard.textContent = "Dashboard";
+      dashboard.textContent = "My Orders";
     }
     navLinks.appendChild(dashboard);
   }

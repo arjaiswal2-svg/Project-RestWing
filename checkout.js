@@ -1,11 +1,3 @@
-import { auth } from "./firebase.js";
-import {
-  onAuthStateChanged
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
-import {
-  getDoc
-} from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
-import { updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 // =============================================
 // checkout.js — RestWing Checkout Logic
 // Saves order to Firestore, then sends
@@ -31,7 +23,8 @@ const STRIPE_PAYMENT_LINK =
 const UNIT_PRICE = 39;
 
 // ── Quantity controls ────────────────────────
-const urlQty = parseInt(new URLSearchParams(window.location.search).get("qty")) || 1;
+const urlQty =
+  parseInt(new URLSearchParams(window.location.search).get("qty")) || 1;
 let quantity = Math.min(Math.max(urlQty, 1), 10);
 
 const qtyDisplay = document.getElementById("qty-display");
@@ -47,12 +40,6 @@ function updateTotals() {
 
 updateTotals();
 
-onAuthStateChanged(auth, (user) => {
-  if (user) {
-    autofillUser(user.uid);
-  }
-});
-
 document.getElementById("qty-minus").addEventListener("click", () => {
   if (quantity > 1) {
     quantity--;
@@ -67,39 +54,6 @@ document.getElementById("qty-plus").addEventListener("click", () => {
   }
 });
 
-// ── Autofill user data ───────────────────────
-async function autofillUser(uid) {
-  try {
-    const ref = doc(db, "users", uid);
-    const snap = await getDoc(ref);
-
-    if (!snap.exists()) return;
-
-    const data = snap.data();
-
-    const a = data.address || data.shipping || {};
-
-    const setVal = (id, value) => {
-      const el = document.getElementById(id);
-      if (el) el.value = value || "";
-    };
-
-    // Contact
-    setVal("first-name", data.firstName);
-    setVal("last-name", data.lastName);
-    setVal("email", data.email);
-    setVal("phone", data.phone);
-    // Shipping
-    setVal("address", a.address);
-    setVal("address2", a.address2);
-    setVal("city", a.city);
-    setVal("state", a.state);
-    setVal("zip", a.zip);
-
-  } catch (err) {
-    console.error("Autofill error:", err);
-  }
-}
 // ── Form Submission ──────────────────────────
 document
   .getElementById("checkout-form")
@@ -160,28 +114,19 @@ document
         // Decrement stock
         transaction.update(inventoryRef, { stock: currentStock - quantity });
       });
-      if (!auth.currentUser) {
-          throw new Error("User not logged in");
-      }
 
-      const uid = auth.currentUser.uid;
-
+      // Stock confirmed — save the order
       const orderRef = await addDoc(collection(db, "orders"), {
-       userId: uid,
-
-       customer: { firstName, lastName, email, phone },
-       shipping: { address, address2, city, state, zip },
-
-       quantity,
-       unitPrice: UNIT_PRICE,
-       total: quantity * UNIT_PRICE,
-
-       status: "pending_payment",
-       createdAt: serverTimestamp(),
+        customer: { firstName, lastName, email, phone },
+        shipping: { address, address2, city, state, zip },
+        quantity,
+        unitPrice: UNIT_PRICE,
+        total: quantity * UNIT_PRICE,
+        status: "pending_payment",
+        createdAt: serverTimestamp(),
       });
-      await updateDoc(doc(db, "users", uid), {
-       address: { address, address2, city, state, zip }
-      });
+
+
       orderId = orderRef.id;
 
       // Redirect to Stripe with prefilled email and order reference
