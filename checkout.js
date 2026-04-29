@@ -4,11 +4,13 @@
 // customer to Stripe to complete payment.
 // =============================================
 
-import { db } from "./firebase.js";
+import { auth, db } from "./firebase.js";
+import { onAuthStateChanged } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
 import {
   collection,
   addDoc,
   doc,
+  getDoc,
   runTransaction,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -39,6 +41,32 @@ function updateTotals() {
 }
 
 updateTotals();
+
+// ── Autofill logged-in user data ─────────────
+onAuthStateChanged(auth, async (user) => {
+  if (!user) return;
+  try {
+    const snap = await getDoc(doc(db, "users", user.uid));
+    if (!snap.exists()) return;
+    const data = snap.data();
+    const a = data.address || {};
+    const setVal = (id, val) => {
+      const el = document.getElementById(id);
+      if (el && val) el.value = val;
+    };
+    setVal("first-name", data.firstName);
+    setVal("last-name",  data.lastName);
+    setVal("email",      data.email);
+    setVal("phone",      data.phone);
+    setVal("address",    a.address);
+    setVal("address2",   a.address2);
+    setVal("city",       a.city);
+    setVal("state",      a.state);
+    setVal("zip",        a.zip);
+  } catch (err) {
+    console.error("Autofill error:", err);
+  }
+});
 
 document.getElementById("qty-minus").addEventListener("click", () => {
   if (quantity > 1) {
@@ -116,7 +144,9 @@ document
       });
 
       // Stock confirmed — save the order
+      const uid = auth.currentUser ? auth.currentUser.uid : null;
       const orderRef = await addDoc(collection(db, "orders"), {
+        ...(uid && { userId: uid }),
         customer: { firstName, lastName, email, phone },
         shipping: { address, address2, city, state, zip },
         quantity,
