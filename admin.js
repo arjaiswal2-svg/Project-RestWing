@@ -28,11 +28,6 @@ onAuthStateChanged(auth, async (user) => {
   loadOrders();
   loadProducts();
 });
-//Admin logout
-window.logout = function () {
-  signOut(auth);
-  window.location.href = "index.html";
-};
 //Load products
 async function loadProducts() {
   const container = document.getElementById("products-list");
@@ -110,4 +105,14 @@ document.addEventListener("DOMContentLoaded", () => {
       loadProducts();
     });
   }
+  document.addEventListener("DOMContentLoaded", () => {
+    const saveBtn = document.getElementById("logout-btn");
+    if (btn) {
+      btn.addEventListener("click", async () => {
+        e.preventDefault();
+        await signOut(auth);
+        window.location.href = "index.html";
+      });
+    }
+});
 });
