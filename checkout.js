@@ -164,6 +164,7 @@ document
         unitPrice: UNIT_PRICE,
         total: quantity * UNIT_PRICE,
         status: "pending_payment",
+        userId: auth.currentUser?.uid || null,
         createdAt: serverTimestamp(),
       });
 
