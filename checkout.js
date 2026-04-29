@@ -11,6 +11,7 @@ import {
   addDoc,
   doc,
   getDoc,
+  updateDoc,
   runTransaction,
   serverTimestamp,
 } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
@@ -158,6 +159,13 @@ document
 
 
       orderId = orderRef.id;
+
+      // Save shipping address back to user profile if logged in
+      if (uid) {
+        await updateDoc(doc(db, "users", uid), {
+          address: { address, address2, city, state, zip }
+        });
+      }
 
       // Redirect to Stripe with prefilled email and order reference
       const stripeUrl = `${STRIPE_PAYMENT_LINK}?prefilled_email=${encodeURIComponent(email)}&client_reference_id=${orderId}&quantity=${quantity}`;
