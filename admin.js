@@ -31,7 +31,7 @@ onAuthStateChanged(auth, async (user) => {
 //Admin logout
 window.logout = function () {
   signOut(auth);
-  window.location.href = "admin-login.html";
+  window.location.href = "index.html";
 };
 //Load products
 async function loadProducts() {
@@ -110,5 +110,4 @@ document.addEventListener("DOMContentLoaded", () => {
       loadProducts();
     });
   }
-
 });
