@@ -15,7 +15,7 @@ onAuthStateChanged(auth, async (user) => {
 
   const loginLink  = navLinks.querySelector('a[href="login.html"]');
   const signupLink = navLinks.querySelector('a[href="signup.html"]');
-  const buyNowLink = navLinks.querySelector('a[href="buy-now.html"]');
+  const buyNowLink = navLinks.querySelector('a[href="buynow.html"]');
 
   if (user) {
     // Hide login/signup, + buy now
@@ -28,6 +28,7 @@ onAuthStateChanged(auth, async (user) => {
   try {
     const snap = await getDoc(doc(db, "users", user.uid));
     if (snap.exists()) {
+      const data = snap.data();
       role = data.role || "user";
     }
   } catch (err) {
